@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     TextView text;
     ListView lv;
-    Gato[] content = {new Gato(R.drawable.img,"Gato"),new Gato(R.drawable.pop,"POP"),new Gato(R.drawable.img,"Gato2"),
-            new Gato(R.drawable.pop,"POP POP"),new Gato(R.drawable.img,"Gatete"), new Gato(R.drawable.pop,"POPOPOP"),
-            new Gato(R.drawable.img_1,"HitHub")};
+    Gato[] content = {new Gato(R.drawable.img, "Gato"), new Gato(R.drawable.pop, "POP"), new Gato(R.drawable.img, "Gato2"),
+            new Gato(R.drawable.pop, "POP POP"), new Gato(R.drawable.img, "Gatete"), new Gato(R.drawable.pop, "POPOPOP"),
+            new Gato(R.drawable.img_1, "HitHub")};
 
 
     @Override
@@ -30,12 +30,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lv= findViewById(R.id.listView);
-        MyAdapter<Gato> adapter=new MyAdapter<>(this, R.layout.custom_list_layout,R.id.list_item,content);
+        lv = findViewById(R.id.listView);
+        MyAdapter<Gato> adapter = new MyAdapter<>(this, R.layout.custom_list_layout, R.id.list_item, content);
         lv.setAdapter(adapter);
-        text=findViewById(R.id.text);
+        text = findViewById(R.id.text);
         lv.setOnItemClickListener(this);
-
     }
 
     @Override
@@ -49,17 +48,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             super(context, resource, textViewResourceId, (T[]) objects);
         }
 
-        @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View v=super.getView(position, convertView,parent);
-            ImageView image= findViewById(R.id.image);
-
-            if(position==1)
-            {
+            View v = super.getView(position, convertView, parent);
+            ImageView image = findViewById(R.id.image);
+            if (position == 1) {
+                text.setText(content[position].getText());
                 image.setImageResource(content[position].getImageId());
+
             }
             return v;
         }
-}
+    }
 }
