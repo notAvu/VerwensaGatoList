@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ejemplo list(Adapters)</string>
+    <string name="listview">ListaVista</string>
 </resources>
