@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         lv = findViewById(R.id.listView);
         MyAdapter<Gato> adapter = new MyAdapter<>(this, R.layout.custom_list_layout, R.id.list_item, content);
         lv.setAdapter(adapter);
-        text = findViewById(R.id.text);
+//        text = findViewById(R.id.text);
         lv.setOnItemClickListener(this);
     }
 
@@ -52,11 +52,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View v = super.getView(position, convertView, parent);
             ImageView image = findViewById(R.id.image);
-            if (position == 1) {
-                text.setText(content[position].getText());
-                image.setImageResource(content[position].getImageId());
-
-            }
+            TextView item = findViewById(R.id.list_item);
+            item.setText(content[position].getText());
+            image.setImageResource(content[position].getImageId());
             return v;
         }
     }

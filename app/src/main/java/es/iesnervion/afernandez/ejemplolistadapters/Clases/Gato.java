@@ -24,6 +24,8 @@ public class Gato {
         this.imageId = imageId;
     }
 
+    int a =17>>2;
+
     public String getText() {
         return text;
     }
