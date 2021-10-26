@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         lv = findViewById(R.id.listView);
         MyAdapter<Gato> adapter = new MyAdapter<>(this, R.layout.custom_list_layout, R.id.list_item, content);
         MyAdapter<Gato> adapter2 = new MyAdapter<>(this, R.layout.list_layout2, R.id.item, content);
@@ -103,13 +102,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         @Override
+        public int getViewTypeCount() {
+            return super.getViewTypeCount();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return super.getItemViewType(position);
+        }
+
+        @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
             View view1=super.getView(position, convertView, parent);
             View row=convertView;
 
             ViewHolder holder;
-            if(row==null)
+            if(row==null && getItemViewType(position)==0)
             {
                 LayoutInflater inflater= getLayoutInflater();
                 inflater.inflate(R.layout.custom_list_layout, parent, false);
