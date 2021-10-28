@@ -36,13 +36,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lv = findViewById(R.id.listView);
-        MyAdapter<Gato> adapter = new MyAdapter<>(this, R.layout.custom_list_layout, R.id.list_item, content);
-        MyAdapter<Gato> adapter2 = new MyAdapter<>(this, R.layout.list_layout2, R.id.item, content);
+        MyAdapter<Gato> adapter = new MyAdapter<>(this, R.id.list_item, content);
         lv.setAdapter(adapter);
-        vista.setAdapter(adapter2);
         text = findViewById(R.id.text);
         lv.setOnItemClickListener(this);
-        vista.setOnItemClickListener(this);
     }
 
     @Override
@@ -97,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     public class MyAdapter<T> extends ArrayAdapter<T> {
 
+        public MyAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+        }
+
+        public MyAdapter(@NonNull Context context, int resource, @NonNull T[] objects) {
+            super(context, resource, objects);
+        }
+
         public MyAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull Object[] objects) {
             super(context, resource, textViewResourceId, (T[]) objects);
         }
@@ -114,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
-            View view1=super.getView(position, convertView, parent);
             View row=convertView;
 
             ViewHolder holder;
@@ -130,22 +134,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 item.setText(content[position].toString());
                 image.setImageResource(content[position].getImageId());
             }
-//            if(position==2||position==4)
-//            {
-//                LayoutInflater inflater= getLayoutInflater();
-//                inflater.inflate(R.layout.list_layout2, parent, false);
-//                TextView txt=findViewById(R.id.item);
-//                ImageView imageView=findViewById(R.id.img);
-//                ImageView scnd=findViewById(R.id.simg);
-//                NewViewHolder holderN = new NewViewHolder(txt, imageView, scnd);
-//
-//                ImageView image = view1.findViewById(R.id.image);
-//                TextView item = view1.findViewById(R.id.list_item);
-//                ImageView imgTwo= view1.findViewById(R.id.simg);
-//                item.setText(content[position].toString());
-//                image.setImageResource(content[position].getImageId());
-//                imgTwo.setImageResource(R.drawable.gatostada);
-//            }
+            if(position==2||position==4)
+            {
+                LayoutInflater inflater= getLayoutInflater();
+                inflater.inflate(R.layout.list_layout2, parent, false);
+                TextView txt=findViewById(R.id.item);
+                ImageView imageView=findViewById(R.id.img);
+                ImageView scnd=findViewById(R.id.simg);
+
+                NewViewHolder holderN = new NewViewHolder(txt, imageView, scnd);
+
+                ImageView image = view.findViewById(R.id.image);
+                TextView item = view.findViewById(R.id.list_item);
+                ImageView imgTwo= view.findViewById(R.id.simg);
+                item.setText(content[position].toString());
+                image.setImageResource(content[position].getImageId());
+                imgTwo.setImageResource(R.drawable.gatostada);
+            }
 
             return view;
         }
