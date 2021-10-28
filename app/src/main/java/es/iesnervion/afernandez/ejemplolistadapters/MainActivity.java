@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lv = findViewById(R.id.listView);
-        MyAdapter<Gato> adapter = new MyAdapter<>(this, R.id.list_item, R.layout.custom_list_layout , content);
+        MyAdapter<Gato> adapter = new MyAdapter<>(this, R.id.list_item, content);
         lv.setAdapter(adapter);
         text = findViewById(R.id.text);
         lv.setOnItemClickListener(this);
@@ -92,8 +92,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             this.secondImage.setImageResource(secondImage);
         }
     }
-    public class MyAdapter<T> extends ArrayAdapter<T> {
+    class MyAdapter<T> extends ArrayAdapter<T> {
 
+        Context context;
+        T[] objects;
         public MyAdapter(@NonNull Context context, int resource) {
             super(context, resource);
         }
@@ -113,47 +115,91 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         @Override
         public int getItemViewType(int position) {
-            //logica que va en que layout
-            return super.getItemViewType(position);
+            int i=1;
+            if(position==2|| position==3) {
+                i=0;
+            }
+            return i;
         }
+
+
 
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View view = super.getView(position, convertView, parent);
-            View row=convertView;
 
-            ViewHolder holder;
-            if(row==null && getItemViewType(position)==0)
+            View row = convertView;
+
+            LayoutInflater inflater=getLayoutInflater();
+
+
+            if(getItemViewType(position)==0)
             {
-                LayoutInflater inflater= getLayoutInflater();
-                inflater.inflate(R.layout.custom_list_layout, parent, false);
-                TextView text= findViewById(R.id.list_item);
-                ImageView iv=findViewById(R.id.image);
-                holder = new ViewHolder(text,iv);
-                ImageView image = view.findViewById(R.id.image);
-                TextView item = view.findViewById(R.id.list_item);
-                item.setText(content[position].toString());
-                image.setImageResource(content[position].getImageId());
-            }
-            if(getItemViewType(position)==1)
-            {
-                LayoutInflater inflater= getLayoutInflater();
-                inflater.inflate(R.layout.list_layout2, parent, false);
-                TextView txt=findViewById(R.id.item);
-                ImageView imageView=findViewById(R.id.img);
-                ImageView scnd=findViewById(R.id.simg);
+                ViewHolder holder;
+                if (row==null)
+                {
+                    row = inflater.inflate(R.layout.custom_list_layout, parent, false);
+                    TextView lab    = row.findViewById(R.id.list_item);
+                    ImageView imgV = row.findViewById(R.id.icon);
+                    holder=new ViewHolder(lab, imgV);
 
-                NewViewHolder holderN = new NewViewHolder(txt, imageView, scnd);
+                }else
+                    {
+                        holder = (ViewHolder) row.getTag();
+                    }
+            }else
+                {
+                    NewViewHolder nvh;
+                    if (row==null)
+                    {
+                        row = inflater.inflate(R.layout.list_layout2, parent, false);
+                        TextView lab    = row.findViewById(R.id.list_item);
+                        ImageView imgV  = row.findViewById(R.id.icon);
+                        ImageView imgV2 = row.findViewById(R.id.simg);
+                        nvh=new NewViewHolder(lab,imgV,imgV2);
+                    }else
+                        {
+                            nvh = (NewViewHolder) row.getTag();
+                        }
+                }
 
-                ImageView image = view.findViewById(R.id.image);
-                TextView item = view.findViewById(R.id.list_item);
-                ImageView imgTwo= view.findViewById(R.id.simg);
-                item.setText(content[position].toString());
-                image.setImageResource(content[position].getImageId());
-                imgTwo.setImageResource(R.drawable.gatostada);
-            }
-
-            return view;
+            return(row);
+//            View row=convertView;
+//            LayoutInflater inflater= getLayoutInflater();
+//
+//
+//            if( getItemViewType(position)==0)
+//            {
+//                row=inflater.inflate(R.layout.custom_list_layout, parent, false);
+//                TextView text= findViewById(R.id.list_item);
+//                ImageView iv=findViewById(R.id.image);
+//                ViewHolder holder = new ViewHolder(text,iv);
+//                ImageView image = row.findViewById(R.id.image);
+//                TextView item = row.findViewById(R.id.list_item);
+//                item.setText(content[position].toString());
+//                image.setImageResource(content[position].getImageId());
+//            }else
+//            if( getItemViewType(position)==1)
+//            {
+//                row=inflater.inflate(R.layout.list_layout2, parent, false);
+//                TextView txt=findViewById(R.id.item);
+//                ImageView imageView=findViewById(R.id.img);
+//                ImageView scnd=findViewById(R.id.simg);
+//
+//                NewViewHolder holderN = new NewViewHolder(txt, imageView, scnd);
+//
+//                ImageView image = row.findViewById(R.id.image);
+//                TextView item = row.findViewById(R.id.list_item);
+//                ImageView imgTwo= row.findViewById(R.id.simg);
+//                item.setText(content[position].toString());
+//                image.setImageResource(content[position].getImageId());
+//                imgTwo.setImageResource(R.drawable.gatostada);
+//            }
+//            else
+//                {
+//
+//                }
+//
+//            return row;
         }
     }
 }
