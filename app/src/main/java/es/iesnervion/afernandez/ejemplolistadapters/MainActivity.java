@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lv = findViewById(R.id.listView);
-        MyAdapter<Gato> adapter = new MyAdapter<>(this, R.id.list_item, content);
+        MyAdapter<Gato> adapter = new MyAdapter<>(this, R.id.list_item, R.layout.custom_list_layout , content);
         lv.setAdapter(adapter);
         text = findViewById(R.id.text);
         lv.setOnItemClickListener(this);
@@ -108,11 +108,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         @Override
         public int getViewTypeCount() {
-            return super.getViewTypeCount();
+            return 2;
         }
 
         @Override
         public int getItemViewType(int position) {
+            //logica que va en que layout
             return super.getItemViewType(position);
         }
 
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 item.setText(content[position].toString());
                 image.setImageResource(content[position].getImageId());
             }
-            if(position==2||position==4)
+            if(getItemViewType(position)==1)
             {
                 LayoutInflater inflater= getLayoutInflater();
                 inflater.inflate(R.layout.list_layout2, parent, false);
